@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welfare Requisition Form - Saut Al Quran</title>
+    <style>
+        :root {
+            --primary-color: #0dcaf0;
+            --secondary-color: #055160;
+            --accent-color: #cff4fc;
+            --text-dark: #212529;
+            --text-muted: #6c757d;
+            --border-color: #9eeaf9;
+            --bg-light: #f8fbfe;
+        }
+
+        * {
+            box-shadow: none;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #e9ecef;
+            color: var(--text-dark);
+            font-size: 11px;
+        }
+
+        /* A4 Landscape Page Setup */
+        .page {
+            width: 297mm;
+            min-height: 210mm;
+            padding: 12mm 15mm;
+            margin: 15mm auto;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            page-break-after: always;
+        }
+
+        /* Centered Header Section */
+        .header-container {
+            display: flex;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 2px;
+            margin-bottom: 5px;
+        }
+
+        .center-logo {
+            max-height: 30px;
+            object-fit: contain;
+        }
+
+        .form-title {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2px;
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-left: auto;
+            border-radius: 4px;
+        }
+
+        .section-title {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 3px 6px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 6px;
+            border-left: 4px solid var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        /* Grid Layout System */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .col-1 { grid-column: span 1; } .col-2 { grid-column: span 2; }
+        .col-3 { grid-column: span 3; } .col-4 { grid-column: span 4; }
+        .col-5 { grid-column: span 5; } .col-6 { grid-column: span 6; }
+        .col-7 { grid-column: span 7; } .col-12 { grid-column: span 12; }
+
+        /* Dynamic Auto-Adjusting Row */
+        .stretch-row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            gap: 14px;
+            width: 100%;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .stretch-row .form-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex: 0 0 auto;
+            min-width: 0;
+        }
+
+        .stretch-row .form-group.referred-by-group {
+            flex: 1 1 0%;
+        }
+
+        .dynamic-field-combo {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-dark);
+            white-space: nowrap;
+        }
+
+        .form-control {
+            flex-grow: 1;
+            border: none;
+            border-bottom: 1px dotted var(--border-color);
+            height: 20px;
+            font-size: 11px;
+            padding: 2px 4px;
+            background: transparent;
+            outline: none;
+            width: 100%;
+        }
+
+        .form-control:focus {
+            border-bottom: 1px solid var(--primary-color);
+            background-color: rgba(21, 115, 71, 0.03);
+        }
+        
+        input[type="date"] {
+            font-family: inherit;
+        }
+
+        /* Custom Dropdown Wrappers */
+        .select-wrapper-dropdown, .religion-select {
+            border: none;
+            border-bottom: 1px dotted var(--border-color);
+            height: 20px;
+            font-size: 10px;
+            background: transparent;
+            outline: none;
+            cursor: pointer;
+            padding: 0 2px;
+            width: 100%;
+        }
+
+        .select-wrapper-dropdown:disabled, input:disabled {
+            background-color: rgba(0, 0, 0, 0.04);
+            border-bottom: 1px dotted #ccc !important;
+            cursor: not-allowed;
+        }
+        
+        .custom-specify-box {
+            display: none;
+            width: 100%;
+            height: 20px;
+            border: none;
+            border-bottom: 1px dotted var(--border-color);
+            outline: none;
+            padding: 0 4px;
+            background: transparent;
+            font-size: 10px;
+        }
+
+        /* Table Centered Single Cell Setup */
+        .table-cell-center {
+            text-align: center;
+            vertical-align: middle;
+            padding: 0 4px !important;
+        }
+
+        .table-cell-center select,
+        .table-cell-center .select-wrapper-dropdown,
+        .table-cell-center .custom-specify-box,
+        .table-cell-center input[type="text"] {
+            border-bottom: none !important;
+            text-align: center !important;
+            text-align-last: center !important;
+            margin: 0 auto;
+            width: 100%;
+            height: 24px;
+        }
+
+        .table-cell-center .dynamic-field-combo {
+            justify-content: center;
+            width: 100%;
+        }
+
+        .table-cell-center .custom-specify-box {
+            height: 22px;
+            font-size: 9px;
+            border-top: none !important;
+            margin-top: 0;
+        }
+
+        /* Screen-only Clean Reset Action Trigger */
+        .back-to-select-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 11px;
+            padding: 0 2px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .back-to-select-btn:hover {
+            color: #b71c1c;
+        }
+
+        /* Top Layout with Photo Box - Fixed alignment breakdown math */
+        .two-column-layout-wrap {
+            display: grid;
+            grid-template-columns: 1fr 35mm;
+            gap: 15px;
+            width: 100%;
+            align-items: start;
+        }
+
+        .photo-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            padding-top: 0;
+        }
+
+        .photo-box {
+            border: 2px dashed var(--border-color);
+            width: 35mm;
+            height: 45mm;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 8px;
+            background-color: var(--bg-light);
+            border-radius: 4px;
+            line-height: 1.3;
+            margin-top: -18px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 4px;
+            font-size: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid var(--border-color);
+        }
+
+        th, .doc-list-header {
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        th {
+            padding: 4px 2px;
+        }
+
+        td {
+            padding: 1px;
+            height: 38px;
+            vertical-align: middle;
+        }
+
+        td input[type="text"], td input[type="number"] {
+            width: 100%;
+            height: 34px;
+            border: none;
+            outline: none;
+            padding: 0 4px;
+            background: transparent;
+            font-size: 10px;
+        }
+
+        /* Remove Number Spinners */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .cell-textarea {
+            width: 100%;
+            min-height: 34px;
+            border: none;
+            outline: none;
+            padding: 4px;
+            background: transparent;
+            font-size: 10px;
+            font-family: inherit;
+            resize: none;
+            display: block;
+            line-height: 1.2;
+            overflow: hidden;
+        }
+
+        .stacked-cell-input {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 34px;
+            padding: 1px 4px;
+        }
+
+        .stacked-cell-input input[type="text"] {
+            height: 16px;
+            padding: 0;
+        }
+
+        .stacked-cell-input .id-row {
+            border-top: 1px dotted var(--border-color);
+            font-size: 9px;
+        }
+
+        .text-center { text-align: center; }
+
+        .checkbox-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"],
+        .checkbox-item input[type="radio"] {
+            cursor: pointer;
+            accent-color: var(--primary-color);
+            width: 12px;
+            height: 12px;
+            margin: 0;
+        }
+
+        /* Analysis & Checklist Layout styling updates */
+        .analysis-split-container {
+            display: grid;
+            grid-template-columns: 48% 47%;
+            margin-top: 5px;
+            gap: 51px;
+            align-items: start;
+        }
+
+        /* Exact mathematical alignment for row heights across blocks */
+        .sub-table th, .doc-list-header { 
+            height: 20px; 
+            font-size: 9.5px; 
+            padding: 4px 2px; 
+            box-sizing: border-box;
+        }
+        
+        .doc-list-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .sub-table td, .doc-item { 
+            height: 26px; 
+            box-sizing: border-box;
+        }
+        
+        .sub-table td input[type="text"], .sub-table td input[type="number"] { 
+            height: 100%; 
+        }
+
+        #makatib-summary-table th {
+            height: 24px;
+        }
+        
+        #makatib-summary-table td {
+            height: 18.8px;
+            box-sizing: border-box;
+        }
+
+        /* Highlighted Per Head Entry Styling */
+        .highlighted-row-accent {
+            background-color: var(--accent-color) !important;
+            font-weight: 800 !important;
+            font-size: 13px !important;
+            color: var(--primary-color) !important;
+        }
+        
+        .highlighted-row-accent input {
+            font-size: 13px !important;
+            font-weight: 800 !important;
+            color: var(--primary-color) !important;
+        }
+
+        /* Red Alert styling rules for Negative Balance values */
+        .negative-value-highlight, .negative-value-highlight input {
+            color: #b71c1c !important;
+        }
+
+        .doc-list-wrapper {
+            border: 1px solid var(--border-color);
+            background-color: #fff;
+            height: fit-content;
+        }
+
+        .doc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px;
+            border-bottom: 1px solid #e2efea;
+            font-size: 9.5px;
+        }
+        .doc-item:last-child { border-bottom: none; }
+        .doc-label { padding-right: 10px; line-height: 1.2; }
+        
+        /* Fixed checklist options layout alignment */
+        .doc-options { 
+            display: flex; 
+            gap: 12px; 
+            white-space: nowrap; 
+            align-items: center;
+        }
+        .doc-options label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+        .doc-options input[type="radio"] {
+            margin: 0;
+            width: 12px;
+            height: 12px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 8mm;
+            right: 15mm;
+            font-size: 9px;
+            color: var(--text-muted);
+        }
+
+        .textarea-box {
+            width: 100%;
+            height: 60px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-light);
+            border-radius: 4px;
+            padding: 6px;
+            font-size: 11px;
+            line-height: 1.4;
+            outline: none;
+            resize: none;
+            margin-top: 4px;
+        }
+
+        /* Dynamic Row Visibility */
+        .family-member-row { display: none; }
+        .family-member-row.is-active { display: table-row; }
+
+        .validation-warning-note {
+            color: #b71c1c;
+            font-size: 9px;
+            font-weight: bold;
+            margin-left: 8px;
+            display: none;
+        }
+
+        .currency-prefix {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-dark);
+            padding-left: 2px;
+        }
+
+        /* Print Specific Adjustments */
+        @media print {
+            html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+                background-color: #fff;
+                /* Crucial: prevents the body from generating extra scroll/pages */
+                width: 297mm !important;
+                height: 210mm !important;
+            }
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+            .page {
+                margin: 0 !important;
+                box-shadow: none;
+                width: 297mm !important;
+                height: 210mm !important; /* Strictly lock to A4 height */
+                padding: 10mm 12mm !important;
+                box-sizing: border-box !important;
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                overflow: hidden !important; /* Force clip anything that tries to spill over */
+            }
+            
+            /* Stop a blank page from generating after the very last page */
+            .page:last-of-type {
+                page-break-after: auto !important;
+            }
+
+            .form-control, .religion-select, .select-wrapper-dropdown:not(.table-cell-center select) {
+                border-bottom: 1px solid #555 !important;
+            }
+
+            .form-control.no-underline-print,
+            .religion-select.no-underline-print,
+            .select-wrapper-dropdown.no-underline-print,
+            input.no-underline-print,
+            select.no-underline-print,
+            .custom-specify-box.no-underline-print,
+            .table-cell-center select,
+            .table-cell-center input {
+                border: none !important;
+                border-bottom: none !important;
+                background: transparent !important;
+            }
+
+            .section-title, .form-title, th, .doc-list-header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .section-title { background-color: var(--accent-color) !important; }
+            th, .doc-list-header { background-color: var(--secondary-color) !important; color: #fff !important; }
+            .form-title { background-color: var(--primary-color) !important; color: #fff !important; }
+            
+            input[type="date"]::-webkit-calendar-picker-indicator {
+                display: none;
+                -webkit-appearance: none;
+            }
+            
+            .textarea-box { border: 1px solid #bbb; background: transparent; }
+            
+            input[type="text"]:not(.no-underline-print), 
+            input[type="number"], 
+            input[type="date"], 
+            .cell-textarea {
+                border: none;
+            }
+            
+            select {
+                -webkit-appearance: none !important;
+                -moz-appearance: none !important;
+                appearance: none !important;
+            }
+
+            .stacked-cell-input .id-row { border-top: 1px solid #777 !important; }
+            .photo-box {
+                border: 1px dashed #555 !important;
+                width: 35mm !important;
+                height: 45mm !important;
+            }
+            .back-to-select-btn { display: none !important; }
+            input::placeholder, textarea::placeholder { color: transparent; }
+            .family-member-row { display: none !important; }
+            .family-member-row.is-active { display: table-row !important; }
+            }
+            .highlighted-row-accent {
+                background-color: var(--accent-color) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .negative-value-highlight, .negative-value-highlight input {
+                color: #b71c1c !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            button {
+            display: none !important;
+            .no-print {
+                        display: none !important;
+                        visibility: hidden !important;
+            }
+            body {
+            margin: 0;
+            padding: 0;
+            /* Remove the default arrow from all dropdowns */
+    select, 
+    .select-wrapper-dropdown, 
+    .religion-select {
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+    }
+
+    /* Ensure the text is visible even if the dropdown styling is removed */
+    select option {
+        color: black !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Protection Overlay -->
+<div id="passwordOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #0f172a; z-index: 999999; display: flex; justify-content: center; align-items: center; font-family: system-ui, -apple-system, sans-serif;">
+    <div style="background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); text-align: center; max-width: 320px; width: 85%;">
+        <div style="font-size: 40px; margin-bottom: 10px;">🔒</div>
+        <h2 style="margin: 0 0 8px 0; color: #1e293b; font-size: 20px;">Protected Access</h2>
+        <p style="color: #64748b; font-size: 14px; margin: 0 0 20px 0;">Enter password to unlock the application.</p>
+        
+        <input type="password" id="appPasswordInput" placeholder="Enter Password" style="width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; font-size: 16px; outline: none;">
+        
+        <button type="button" id="unlockBtn" style="width: 100%; padding: 12px; background-color: #2563eb; color: #ffffff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;">Unlock App</button>
+        
+        <p id="passwordError" style="color: #ef4444; font-size: 13px; margin: 12px 0 0 0; display: none;">❌ Incorrect password. Try again.</p>
+    </div>
+</div>
+            <div class="no-print" style="position: absolute; top: 10px; right: 10px; display: flex; gap: 10px;">
+    <button onclick="resetForm()" style="
+        padding: 10px 20px; 
+        background-color: #dc3545; 
+        color: white; 
+        border: none; 
+        border-radius: 5px; 
+        cursor: pointer; 
+        font-weight: bold;
+    ">Reset Form</button>
+    <button onclick="validateAndPrint()" style="
+        padding: 10px 20px; 
+        background-color: #0dcaf0; 
+        color: white; 
+        border: none; 
+        border-radius: 5px; 
+        cursor: pointer; 
+        font-weight: bold;
+    ">Print to PDF</button>
+</div>
+</div>
+    <div class="page">
+        <div class="header-container">
+            <img src=data:image/jpeg;base64,/9j/4QC8RXhpZgAASUkqAAgAAAAGABIBAwABAAAAAQAAABoBBQABAAAAVgAAABsBBQABAAAAXgAAACgBAwABAAAAAgAAABMCAwABAAAAAQAAAGmHBAABAAAAZgAAAAAAAABgAAAAAQAAAGAAAAABAAAABgAAkAcABAAAADAyMTABkQcABAAAAAECAwAAoAcABAAAADAxMDABoAMAAQAAAP//AAACoAQAAQAAAIkCAAADoAQAAQAAAKgAAAAAAAAA/+ENfmh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8APD94cGFja2V0IGJlZ2luPSfvu78nIGlkPSdXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQnPz4KPHg6eG1wbWV0YSB4bWxuczp4PSdhZG9iZTpuczptZXRhLyc+CjxyZGY6UkRGIHhtbG5zOnJkZj0naHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyc+CgogPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9JycKICB4bWxuczpBdHRyaWI9J2h0dHA6Ly9ucy5hdHRyaWJ1dGlvbi5jb20vYWRzLzEuMC8nPgogIDxBdHRyaWI6QWRzPgogICA8cmRmOlNlcT4KICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0nUmVzb3VyY2UnPgogICAgIDxBdHRyaWI6Q3JlYXRlZD4yMDI2LTA3LTExPC9BdHRyaWI6Q3JlYXRlZD4KICAgICA8QXR0cmliOkRhdGE+eyZxdW90O2RvYyZxdW90OzomcXVvdDtEQUhQR1ZEUmFyUSZxdW90OywmcXVvdDt1c2VyJnF1b3Q7OiZxdW90O1VBR0N2aHlPY2FnJnF1b3Q7LCZxdW90O2JyYW5kJnF1b3Q7OiZxdW90O0JBR0N2bHZ1RnJBJnF1b3Q7fTwvQXR0cmliOkRhdGE+CiAgICAgPEF0dHJpYjpFeHRJZD5mMDhjNjk0Yy0yYTEzLTRlNDQtOGFlMy02YmI4NTFkZGI1YjM8L0F0dHJpYjpFeHRJZD4KICAgICA8QXR0cmliOkZiSWQ+NTI1MjY1OTE0MTc5NTgwPC9BdHRyaWI6RmJJZD4KICAgICA8QXR0cmliOlRvdWNoVHlwZT4yPC9BdHRyaWI6VG91Y2hUeXBlPgogICAgPC9yZGY6bGk+CiAgIDwvcmRmOlNlcT4KICA8L0F0dHJpYjpBZHM+CiA8L3JkZjpEZXNjcmlwdGlvbj4KCiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0nJwogIHhtbG5zOmRjPSdodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyc+CiAgPGRjOnRpdGxlPgogICA8cmRmOkFsdD4KICAgIDxyZGY6bGkgeG1sOmxhbmc9J3gtZGVmYXVsdCc+VW50aXRsZWQgZGVzaWduIC0gMTwvcmRmOmxpPgogICA8L3JkZjpBbHQ+CiAgPC9kYzp0aXRsZT4KIDwvcmRmOkRlc2NyaXB0aW9uPgo8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8P3hwYWNrZXQgZW5kPSd3Jz8+/9sAQwAGBAUGBQQGBgUGBwcGCAoQCgoJCQoUDg8MEBcUGBgXFBYWGh0lHxobIxwWFiAsICMmJykqKRkfLTAtKDAlKCko/9sAQwEHBwcKCAoTCgoTKBoWGigoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo/8AAEQgAqAKJAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A+qaKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooqPPHUigCSikHSloAKKKKACiiigAooooAKKKD0oAKKYrA8+tPoAKKKKACiimscGgBTRUE0yRbfNkVNxwNxxk1KhGeKA1HClpKWgAooooAKKKKACiiigAooooAKKKKACkparzzNGjsEZyOQo6n6UAPL4Jya5jXPHOi6TIYpLr7Tc54gth5jn8uKbrUC3MUlx4i1H7Hpq9bdJPLUj/po3VvcdKwdJ1yG7iWPwF4bW4tz0vZlENuPfJ+Zv+A0D0Irv4kapIJW0zwzfPGPuPNG67vw21jv8VtctnxfaPDFjkhi8Z/NhivRrOHxFMoN7fWFsR1W0iMg/wDH8GteSzhuIdl3HFOCMMXQc0rG0KtNfFG55tpnxfsZQn9oWNzAG43xESL169j+QruNG8S6Vrfy6ZfxTP3jzhxjqdpwf0rn/EHw30XUE3WMa2FzggSRDI/EV5Hr/h7UfDd+BPvjkDboriIkZx6HsfrSu0dUKFDE6U3Zn0orknr3qQGvHfh98RpTLBpfiOUO7nZDdnA3HsH9D7167G+/7pBX1qr3OKrQnRlyzRLS0gpaDMKKKKAGM23PNN3nucd/WsTxdpuo6pp4g0rWZdIlDbmniQM2305rkdA0Txr/AGtaSaj4xs77TLR95S3tgJph/dkPTFAHpkZyuT/OnU2L7vOPwp1ABRRSMcCgBaKj3sR1HP6Um9twHY+ooAlooJwM1ClxHISEkRyOoVgcUATUVXFyhk8sSJ5nOF3DPHtU6nIGaAFooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAGnIPtSI4dcqciqer3QtLGaVm27RgH61PbqI4lSPlR0PrQBMc9jUMsuwgDJYngetLFMkryKrAsjbT7VlawdQtrqG60+BLtP9W8LSBCB/eBPH4UAjYycZzxS7veq7NKICVQGXbkL2J9M9q4C4HjBtXtQ+rWED3En/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 alt="Saut Al Quran Logo" width="300">
+        <div class="form-title">WELFARE REQUISITION FORM</div>
+        </div>
+
+        <div class="section-title">BASIC INFORMATION</div>
+
+        <div class="grid-container" style="margin-bottom: 5px;">
+            <div class="col-3 form-group"><label>Code (Optional):</label><input type="text" class="form-control" placeholder="Optional"></div>
+            <div class="col-3 form-group"><label>Survey Date:</label><input type="date" id="survey-date" class="form-control"></div>
+            <div class="col-6 form-group">
+                <label>Type of Inquiry:</label>
+                <div class="checkbox-group" style="margin-left: 10px;">
+                    <label class="checkbox-item"><input type="checkbox"> Ration</label>
+                    <label class="checkbox-item"><input type="checkbox"> Education</label>
+                    <label class="checkbox-item"><input type="checkbox"> Medical</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-column-layout-wrap">
+            <div>
+                <div class="stretch-row">
+                    <div class="form-group">
+                        <label>Surveyor Name:</label>
+                        <div class="dynamic-field-combo">
+                            <select id="survey-officer-dropdown" class="select-wrapper-dropdown no-underline-print" style="width: 195px;">
+                                <option value="">Select Surveyor</option>
+                                <option value="Syed Asghar Ali Sohail">Syed Asghar Ali Sohail</option>
+                                <option value="Mohammed Asim Ahmed Quadri">Mohammed Asim Ahmed Quadri</option>
+                                <option value="Fasiuddin Khan Mohammed">Fasiuddin Khan Mohammed</option>
+                                <option value="Anwaruddin Hashim">Anwaruddin Hashim</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <input type="text" id="survey-officer-custom" class="form-control no-underline-print" placeholder="Specify Surveyor" style="display: none; width: 195px;">
+                            <button type="button" id="survey-officer-back" class="back-to-select-btn" title="Change Selection">✕</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Village:</label>
+                        <div class="dynamic-field-combo">
+                            <select id="village-selector" class="select-wrapper-dropdown no-underline-print" style="width: 110px;">
+                                <option value="">Select Village</option>
+                                <option value="Ali Hasan Masjid">Ali Hasan Masjid</option>
+                                <option value="Aloor">Aloor</option>
+                                <option value="Chauderguda">Chauderguda</option>
+                                <option value="Chigrapalle">Chigrapalle</option>
+                                <option value="Chengamul">Chengamul</option>
+                                <option value="Chintalmet - HYD">Chintalmet - HYD</option>
+                                <option value="Chityal">Chityal</option>
+                                <option value="Chowdapur">Chowdapur</option>
+                                <option value="Irshad ul uloom">Irshad ul uloom</option>
+                                <option value="Jama Masjid Pargi">Jama Masjid Pargi</option>
+                                <option value="Jhirra - HYD">Jhirra - HYD</option>
+                                <option value="Kakarjal">Kakarjal</option>
+                                <option value="Khan Colony">Khan Colony</option>
+                                <option value="Malle-ManGuda">Malle-ManGuda</option>
+                                <option value="Manneguda">Manneguda</option>
+                                <option value="Masjid parven-HYD">Masjid parven-HYD</option>
+                                <option value="Medpally Kalan">Medpally Kalan</option>
+                                <option value="Nashkal">Nashkal</option>
+                                <option value="NTR Nagar">NTR Nagar</option>
+                                <option value="Rajeev Nagar Colony">Rajeev Nagar Colony</option>
+                                <option value="Rajiv Gruha Kalpa">Rajiv Gruha Kalpa</option>
+                                <option value="Rangampally">Rangampally</option>
+                                <option value="Roopkhanpet">Roopkhanpet</option>
+                                <option value="Sultan Nagar">Sultan Nagar</option>
+                                <option value="Syedpalli">Syedpalli</option>
+                                <option value="Tangadpally">Tangadpally</option>
+                                <option value="Tunkulgadda">Tunkulgadda</option>
+                                <option value="Udithiyal">Udithiyal</option>
+                                <option value="Veeranapet">Veeranapet</option>
+                                <option value="Yelkaguda">Yelkaguda</option>
+                                <option value="Yelkicherla">Yelkicherla</option>
+                                <option value="Yennapalli">Yennapalli</option>
+                                <option value="ALIM Course">ALIM Course</option>
+                                <option value="IQRA-Asif Nagar">IQRA-Asif Nagar</option>
+                                <option value="IQRA-TC">IQRA-TC</option>
+                                <option value="MMHS">MMHS</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <input type="text" id="village-custom" class="form-control no-underline-print" placeholder="Specify Village" style="display: none; width: 110px;">
+                            <button type="button" id="village-back" class="back-to-select-btn" title="Change Selection">✕</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Category (Optional):</label>
+                        <input type="text" class="form-control" placeholder="Optional" maxlength="20" style="width: 80px;">
+                    </div>
+                    <div class="form-group referred-by-group">
+                        <label>Referred by:</label>
+                        <input type="text" class="form-control" maxlength="30">
+                    </div>
+                </div>
+                <div class="grid-container" style="margin-bottom: 6px; grid-template-columns: repeat(12, 1fr);">
+                    <div class="col-7 form-group"><label>Beneficiary Name:</label><input type="text" id="basic-beneficiary-name" class="form-control" placeholder="Beneficiary Name"></div>
+                    <div class="col-1 form-group"><label>Age:</label><input type="text" id="basic-beneficiary-age" class="form-control" placeholder="Age" readonly style="font-weight: bold; text-align: center; padding: 0; background-color: rgba(0,0,0,0.02);"></div>
+                    <div class="col-4 form-group"><label>DOB:</label><input type="date" id="basic-beneficiary-dob" class="form-control"></div>
+                    
+                    <div class="col-4 form-group"><label>Aadhar number:</label><input type="text" id="basic-beneficiary-id" class="form-control safe-id-format" maxlength="14" placeholder="XXXX-XXXX-XXXX"></div>
+                    <div class="col-3 form-group"><label>Mobile Number:</label><input type="text" class="form-control mobile-input" maxlength="10" placeholder="10-digit number"></div>
+                    <div class="col-2 form-group">
+                        <label>Religion:</label>
+                        <div class="dynamic-field-combo" style="width: 100%;">
+                            <select class="religion-select no-underline-print" id="religion-selector">
+                                <option value="">Select</option>
+                                <option value="Islam">Islam</option>
+                                <option value="Hindu">Hindu</option>
+                                <option value="Christian">Christian</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <input type="text" class="form-control no-underline-print" id="religion-custom" placeholder="Specify Religion" style="display: none;">
+                            <button type="button" id="religion-back" class="back-to-select-btn" title="Change Selection">✕</button>
+                        </div>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label>Total Family members:</label>
+                        <input type="number" min="1" max="15" id="total-family-members-count" class="form-control" placeholder="1-10">
+                        <span id="warning-msg-count" class="validation-warning-note">Max 10!</span>
+                    </div>
+                </div>
+
+                <div class="section-title" style="margin-top: 4px;">Address Details & Housing Utilities</div>
+                <div class="grid-container" style="margin-bottom: 0; grid-template-columns: repeat(12, 1fr);">
+                    <div class="col-5 form-group"><label>Full Address:</label><input type="text" class="form-control"></div>
+                    <div class="col-2 form-group"><label>Mandal:</label><input type="text" class="form-control"></div>
+                    <div class="col-2 form-group"><label>Pin Code:</label><input type="text" id="pin-code" class="form-control" placeholder="XXX XXX"></div>
+                    <div class="col-3 form-group">
+                        <label>Type of House:</label>
+                        <div class="dynamic-field-combo" style="width: 100%;">
+                            <select id="house-type-selector" class="select-wrapper-dropdown no-underline-print">
+                                <option value="">Select Type</option>
+                                <option value="Asbestos Roof">Asbestos Roof</option>
+                                <option value="RCC">RCC</option>
+                                <option value="Shingles">Shingles</option>
+                                <option value="Stone Slabs">Stone Slabs</option>
+                                <option value="Tin Roof">Tin Roof</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <input type="text" id="house-type-custom" class="form-control no-underline-print" placeholder="Specify housing type" style="display: none;">
+                            <button type="button" id="house-type-back" class="back-to-select-btn" title="Change Selection">✕</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-container" style="margin-top: 6px; grid-template-columns: repeat(12, 1fr);">
+                    <div class="col-5 form-group">
+                        <label>Rent Details (if applicable):</label>
+                        <span class="currency-prefix">Rs.</span>
+                        <input type="number" min="0" id="source-rent-val" class="form-control" placeholder="Amount">
+                    </div>
+                    <div class="col-7" style="display: flex; gap: 15px; align-items: center; padding-left: 0;">
+                        <div class="form-group"><label>Electricity:</label>
+                            <div class="checkbox-group" style="margin-left: 2px;">
+                                <label class="checkbox-item"><input type="radio" name="elec" id="elec-yes-radio"> Yes</label>
+                                <label class="checkbox-item"><input type="radio" name="elec" id="elec-no-radio"> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group" style="flex-grow: 1;">
+                            <label>Average Bill:</label>
+                            <span class="currency-prefix">Rs.</span>
+                            <input type="number" min="0" id="source-elec-val" class="form-control" placeholder="Bill Amount">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="photo-container">
+                <div class="photo-box">
+                    PP Photo Box<br>35mm x 45mm<br>(7:9 Portrait)
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title" style="margin-top: 4px;">Family Members Details (Rows 1-8)</div>
+        <table id="family-table-p1">
+            <thead>
+                <tr>
+                    <th rowspan="2" style="width: 3%;">S.No</th>
+                    <th rowspan="2" style="width: 18%;">Name of Family Member (Top)<br>& Aadhar number (Bottom)</th>
+                    <th rowspan="2" style="width: 4%;">Age</th>
+                    <th rowspan="2" style="width: 10%;">Relationship with HOF</th>
+                    <th rowspan="2" style="width: 6%;">Kind of Disease or Disability</th>
+                    <th rowspan="2" style="width: 6%;">Level of Education</th>
+                    <th rowspan="2" style="width: 6%;">Job / Skills / Tech. Edu</th>
+                    <th colspan="2" style="width: 8%;">Income (Rs)</th>
+                    <th rowspan="2" style="width: 6%;">Attending Maktab</th>
+                    <th rowspan="2" style="width: 6%;">Class</th>
+                    <th rowspan="2" style="width: 11%;">Course</th>
+                    <th rowspan="2" style="width: 16%;">Teacher Name</th>
+                </tr>
+                <tr>
+                    <th style="width: 4%; font-size: 9.5px; padding: 2px;">Monthly</th>
+                    <th style="width: 4%; font-size: 9.5px; padding: 2px;">Other</th>
+                </tr>
+            </thead>
+            <tbody id="family-tbody-p1">
+                </tbody>
+        </table>
+
+        <div class="page-number">Beneficiary Aadhar Number: <span class="footer-aadhar-display">Not Provided</span> &nbsp;|&nbsp; Page 1 of 2</div>
+    </div>
+
+
+    <div class="page">
+        
+        <div class="section-title" id="p2-table-header-title">Family Members Details (Rows 9-10)</div>
+        <table id="family-table-p2">
+            <thead>
+                <tr>
+                    <th rowspan="2" style="width: 3%;">S.No</th>
+                    <th rowspan="2" style="width: 18%;">Name of Family Member (Top)<br>& Aadhar number (Bottom)</th>
+                    <th rowspan="2" style="width: 4%;">Age</th>
+                    <th rowspan="2" style="width: 10%;">Relationship with HOF</th>
+                    <th rowspan="2" style="width: 6%;">Kind of Disease or Disability</th>
+                    <th rowspan="2" style="width: 6%;">Level of Education</th>
+                    <th rowspan="2" style="width: 6%;">Job / Skills / Tech. Edu</th>
+                    <th colspan="2" style="width: 8%;">Income (Rs)</th>
+                    <th rowspan="2" style="width: 6%;">Attending Maktab</th>
+                    <th rowspan="2" style="width: 6%;">Class</th>
+                    <th rowspan="2" style="width: 11%;">Course</th>
+                    <th rowspan="2" style="width: 16%;">Teacher Name</th>
+                </tr>
+                <tr>
+                    <th style="width: 4%; font-size: 9.5px; padding: 2px;">Monthly</th>
+                    <th style="width: 4%; font-size: 9.5px; padding: 2px;">Other</th>
+                </tr>
+            </thead>
+            <tbody id="family-tbody-p2">
+                </tbody>
+        </table>
+
+        <div class="section-title" style="margin-bottom: 0;">Income / (Expenditure) Analysis & Verification</div>
+        <div class="analysis-split-container" style="margin-top: 0;">
+            <div>
+                <table class="sub-table" style="margin-top: 0;">
+                    <thead>
+                        <tr><th colspan="3">CALCULATION OF INCOME AND EXPENSES</th></tr>
+                        <tr><th style="width: 12%;">S.No</th><th style="width: 58%;">Income details</th><th style="width: 30%;">Amount (Rs)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="text-center">01</td><td>Monthly Earnings</td><td><input type="number" id="calc-monthly-earnings" class="text-center" readonly style="font-weight: bold; background-color: rgba(0,0,0,0.02);"></td></tr>
+                        <tr><td class="text-center">02</td><td>Other Earnings</td><td><input type="number" id="calc-other-earnings" class="text-center" readonly style="font-weight: bold; background-color: rgba(0,0,0,0.02);"></td></tr>
+                        <tr style="background-color: var(--bg-light); font-weight: bold;"><td class="text-center"></td><td>Total Earnings (A)</td><td><input type="number" id="calc-total-earnings" class="text-center" readonly style="font-weight: bold;"></td></tr>
+                        <tr><th style="background-color: var(--secondary-color);">S.No</th><th style="background-color: var(--secondary-color);">Expense details</th><th style="background-color: var(--secondary-color);">Amount (Rs)</th></tr>
+                        <tr><td class="text-center">01</td><td>Medical Expenses</td><td><input type="number" class="text-center expense-field" min="0"></td></tr>
+                        <tr><td class="text-center">02</td><td>Rent</td><td><input type="number" id="target-rent-val" class="text-center expense-field" min="0"></td></tr>
+                        <tr><td class="text-center">03</td><td>Electricity Bill</td><td><input type="number" id="target-elec-val" class="text-center expense-field" min="0"></td></tr>
+                        <tr><td class="text-center">04</td><td>Education Exp</td><td><input type="number" class="text-center expense-field" min="0"></td></tr>
+                        <tr><td class="text-center">05</td><td>Other expenses / Loan / EMI / etc.</td><td><input type="number" class="text-center expense-field" min="0"></td></tr>
+                        <tr style="background-color: var(--bg-light); font-weight: bold;"><td class="text-center"></td><td>Total Expenses (B)</td><td><input type="number" id="calc-total-expenses" class="text-center" readonly style="font-weight: bold;"></td></tr>
+                        <tr id="row-net-amount" style="background-color: var(--bg-light); font-weight: bold; color: var(--text-dark);"><td class="text-center"></td><td>Net Amount (A-B)</td><td><input type="number" id="calc-net-amount" class="text-center" readonly style="font-weight: bold;"></td></tr>
+                        <tr id="row-per-head" class="highlighted-row-accent"><td class="text-center"></td><td>Amount per head</td><td><input type="number" id="calc-per-head" class="text-center" readonly></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <div class="doc-list-wrapper">
+                    <div class="doc-list-header">DOCUMENT CHECKLIST</div>
+                    <div class="doc-item">
+                        <div class="doc-label">01 Passport size Photo of Beneficiary (Mandatory)</div>
+                        <div class="doc-options"><label><input type="radio" name="d1"> Y</label><label><input type="radio" name="d1"> N</label></div>
+                    </div>
+                    <div class="doc-item">
+                        <div class="doc-label">02 Copy of Aadhar of Beneficiary (Mandatory)</div>
+                        <div class="doc-options"><label><input type="radio" name="d2"> Y</label><label><input type="radio" name="d2"> N</label></div>
+                    </div>
+                    <div class="doc-item">
+                        <div class="doc-label">03 Copy of Aadhar of family members</div>
+                        <div class="doc-options"><label><input type="radio" name="d3"> Y</label><label><input type="radio" name="d3"> N</label></div>
+                    </div>
+                    <div class="doc-item">
+                        <div class="doc-label">04 Copy of Latest Progress report (in case of fee support)</div>
+                        <div class="doc-options"><label><input type="radio" name="d4"> Y</label><label><input type="radio" name="d4"> N</label></div>
+                    </div>
+                    <div class="doc-item">
+                        <div class="doc-label">05 Copy of Latest Medical reports (in case of medical support)</div>
+                        <div class="doc-options"><label><input type="radio" name="d5"> Y</label><label><input type="radio" name="d5"> N</label></div>
+                    </div>
+                </div>
+
+                <table class="sub-table" id="makatib-summary-table">
+                    <thead>
+                        <tr><th colspan="4">BENEFICIARY & FAMILY MEMBERS MAKATIB SUMMARY</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr style="font-weight: bold; background-color: var(--bg-light);">
+                            <td colspan="2">Total Members Attending Maktab</td>
+                            <td colspan="2" id="summary-total-maktab" class="text-center" style="font-size: 11px; color: var(--primary-color);">0</td>
+                        </tr>
+                        <tr style="font-weight: 600; background-color: #e2efea; color: var(--primary-color);">
+                            <td colspan="2" class="text-center" style="width: 50%;">CLASS BREAKDOWN</td>
+                            <td colspan="2" class="text-center" style="width: 50%;">COURSE BREAKDOWN</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 35%;">Atfaal</td>
+                            <td id="summary-class-atfaal" class="text-center" style="width: 15%;">0</td>
+                            <td style="width: 35%;">Book-0</td>
+                            <td id="summary-course-book0" class="text-center" style="width: 15%;">0</td>
+                        </tr>
+                        <tr>
+                            <td>Niswaan</td>
+                            <td id="summary-class-niswaan" class="text-center">0</td>
+                            <td>Book-1</td>
+                            <td id="summary-course-book1" class="text-center">0</td>
+                        </tr>
+                        <tr>
+                            <td>Balighan</td>
+                            <td id="summary-class-balighan" class="text-center">0</td>
+                            <td>Book-2</td>
+                            <td id="summary-course-book2" class="text-center">0</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color: var(--bg-light);"></td>
+                            <td>Book-3</td>
+                            <td id="summary-course-book3" class="text-center">0</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color: var(--bg-light);"></td>
+                            <td>Book-4</td>
+                            <td id="summary-course-book4" class="text-center">0</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color: var(--bg-light);"></td>
+                            <td>Quran</td>
+                            <td id="summary-course-quran" class="text-center">0</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="background-color: var(--bg-light);"></td>
+                            <td>Weekly Ijtema</td>
+                            <td id="summary-course-ijtema" class="text-center">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section-title" style="margin-top: 14px; margin-bottom: 0;">Observations / Field Notes</div>
+        <textarea class="textarea-box" placeholder="Write comprehensive field remarks here..." style="height: 75px; margin-top: 0;"></textarea>
+
+        <div class="page-number">Beneficiary Aadhar Number: <span class="footer-aadhar-display">Not Provided</span> &nbsp;|&nbsp; Page 2 of 2</div>
+    </div>
+
+    <script>
+        const teacherList = ["Aamina Baji", "Ameerunnisa Begum", "Anees Baji", "Aneesa Baji", "Afreen Begum Baji", "Arfa Muskaan Baji", "Arsheen Baji", "Arsheen Mehak Baji", "Asiya Sadaf Baji", "Asiya Tabassum Baji", "Asma Ruhi Baji", "Asra Baji", "Atiya Baji W/o Hafiz Sarvar", "Atiya Fatima Baji", "Ayesha Baji", "Azkiya Baji", "Bushra Baji", "Farha Baji", "Ghulam Mustafa", "Gulnaz Baji", "Hafiz A. Qayyum", "Hafiz Abdus Samad", "Hafiz Abdullah", "Hafiz Abdul Qader", "Hafiz Adnan", "Hafiz Afroz", "Hafiz Ahmed Mohiuddin", "Hafiz Ali", "Hafiz Aamer", "Hafiz Amer", "Hafiz Armaan", "Hafiz Asif", "Hafiz Azmathullah", "Hafiz Dilawar", "Hafiz Fayayzuddin", "Hafiz Fayyaz", "Hafiz Imran", "Hafiz Intesar", "Hafiz Jahangir", "Hafiz Kashif", "Hafiz Khalil ur Rehman", "Hafiz Khaleel", "Hafiz Majid Khan", "Hafiz Mazhar Alam", "Hafiz Md Shahed Afreedi", "Hafiz Minsaar / Hafiz Shareef", "Hafiz Moqtar", "Hafiz Musharaf", "Hafiz Murtuza", "Hafiz Murtuza / Hafiz Hussain", "Hafiz Naushaad", "Hafiz Nizamuddin", "Hafiz Nouman", "Hafiz Qamaruddin", "Hafiz Rehan", "Hafiz Riyaz", "Hafiz Sajjad Alam", "Hafiz Saleem", "Hafiz Sarvar", "Hafiz Sayeed", "Hafiz Shafi", "Hafiz Shamsheer", "Hafiz Syed Jalauddin", "Hafiz Tanveer", "Hafiz Altaf", "Hafiz Hussain", "Humera Baji", "Humera Baji (M)", "Husna Baji", "Maemuna Baji", "Mahmooda Baji", "Mahe Jabeen Baji", "Moulana Abdul Qayyum", "Moulana Abdul Salaam", "Moulana Abubacker", "Moulana Aejaz", "Moulana Arif", "Moulana Arshad Rahi", "Moulana Asif Khan Saab", "Moulana Asjad Iqbal", "Moulana Azhar Hayatee", "Moulana Faheem", "Moulana Iqbal Khan", "Moulana Irshad", "Moulana Kouser", "Moulana Mohibullah", "Moulana Moiz", "Moulana Mubarak", "Moulana Salman", "Moulana Shahed", "Moulana Zia ur Rehman", "Mufti Abdul Qayyum", "Mufti Mudassir", "Musfira Anjum Baji", "Muskaan Baji", "Nayeema Irshaadi Baji", "Nazneen Fatima Baji", "Naziya Begum / Rehana Baji", "Nousheen Sultana Baji", "Nusrat Jahan Baji", "Parveen Baji", "Razqa Nausheen Baji", "Rehana Baji / Afreen Baji", "Reshma Baji", "Reshma Sultana Baji", "Rizwana Baji", "Safiya Anjum Baji", "Sajida Begum", "Salma Begum Baji", "Sameena Baji", "Sameera Begum Baji", "Sana Sultana Baji", "Shabana Baji", "Shabreen Baji", "Shahana Baji", "Shakira Baji", "Sheema Baji", "Sheereen Baji", "Sia Baji", "Tabassum Begum Baji", "Tabassum Baji", "Tabassum Sultana Baji", "Tahura Baji", "Tasleem Baji", "Tayyaba Baji", "Wajida Baji", "Waseema Baji", "Wasiya Baji", "Yasmeen Fatima Baji", "Other"];
+
+        function generateRowHTML(i) {
+            const isRow1 = (i === 1);
+            let relationshipCell = isRow1 
+                ? `<input type="text" class="text-center no-underline-print" value="SELF" style="font-weight: bold;" readonly>`
+                : `<select class="select-wrapper-dropdown no-underline-print"><option value="">Select</option><option value="Aunty">Aunty</option><option value="Brother">Brother</option><option value="Brother In-law">Brother In-law</option><option value="Daughter">Daughter</option><option value="Daughter In-law">Daughter In-law</option><option value="Father">Father</option><option value="Father In-law">Father In-law</option><option value="Grand Daughter">Grand Daughter</option><option value="Grand Father">Grand Father</option><option value="Grand Mother">Grand Mother</option><option value="Grandson">Grandson</option><option value="Husband">Husband</option><option value="Mother">Mother</option><option value="Mother In-law">Mother In-law</option><option value="Niece">Niece</option><option value="Nephew">Nephew</option><option value="Sister">Sister</option><option value="Sister In-law">Sister In-law</option><option value="Son">Son</option><option value="Son In-law">Son In-law</option><option value="Uncle">Uncle</option><option value="Wife">Wife</option></select>`;
+
+            return `
+                <tr class="family-member-row row-idx-${i}">
+                    <td class="text-center">${i}</td>
+                    <td>
+                        <div class="stacked-cell-input" ${isRow1 ? 'style="background-color: rgba(0,0,0,0.01);"' : ''}>
+                            <input type="text" id="${isRow1 ? 'table-beneficiary-name' : ''}" ${isRow1 ? 'style="font-weight: bold; color: var(--primary-color);"' : ''} placeholder="${isRow1 ? 'Beneficiary Name' : 'Name'}">
+                            <input type="text" id="${isRow1 ? 'table-beneficiary-id' : ''}" class="id-row safe-id-format family-aadhar-input" maxlength="14" ${isRow1 ? 'style="font-weight: bold; color: var(--primary-color);"' : ''} placeholder="XXXX-XXXX-XXXX">
+                        </div>
+                    </td>
+                    <td class="table-cell-center"><input type="text" id="${isRow1 ? 'table-beneficiary-age' : ''}" class="text-center" ${isRow1 ? 'readonly style="font-weight: bold; background-color: rgba(0,0,0,0.01);"' : ''}></td>
+                    <td class="table-cell-center">${relationshipCell}</td>
+                    <td><textarea class="cell-textarea" rows="1" placeholder="Describe..."></textarea></td>
+                    <td class="table-cell-center"><input type="text"></td>
+                    <td><textarea class="cell-textarea" rows="1" placeholder="Describe..."></textarea></td>
+                    <td><input type="number" class="text-center monthly-income-field" min="0"></td>
+                    <td><input type="number" class="text-center other-income-field" min="0"></td>
+                    <td class="table-cell-center">
+                        <div style="display: flex; justify-content: center; gap: 8px;">
+                            <label class="checkbox-item" style="font-size: 9px;"><input type="radio" name="m${i}" value="Y" class="maktab-toggle-radio"> Y</label>
+                            <label class="checkbox-item" style="font-size: 9px;"><input type="radio" name="m${i}" value="N" class="maktab-toggle-radio" checked> N</label>
+                        </div>
+                    </td>
+                    <td class="table-cell-center">
+                        <select class="class-dropdown-select select-wrapper-dropdown maktab-dependent-field no-underline-print" disabled><option value="">Select Class</option><option value="Atfaal">Atfaal</option><option value="Niswaan">Niswaan</option><option value="Balighan">Balighan</option></select>
+                    </td>
+                    <td class="table-cell-center">
+                        <select class="course-dropdown-select select-wrapper-dropdown maktab-dependent-field no-underline-print" disabled>
+                            <option value="">Select Course</option>
+                            <option value="Book-0">Book-0</option>
+                            <option value="Book-1">Book-1</option>
+                            <option value="Book-2">Book-2</option>
+                            <option value="Book-3">Book-3</option>
+                            <option value="Book-4">Book-4</option>
+                            <option value="Quran">Quran</option>
+                            <option value="Weekly Ijtema">Weekly Ijtema</option>
+                        </select>
+                    </td>
+                    <td class="table-cell-center">
+                        <div class="dynamic-field-combo">
+                            <select class="teacher-dropdown-select select-wrapper-dropdown maktab-dependent-field no-underline-print" disabled></select>
+                            <input type="text" class="custom-specify-box maktab-dependent-field no-underline-print" placeholder="Type Teacher Name">
+                            <button type="button" class="back-to-select-btn table-teacher-back" title="Change Selection" style="font-size: 9px;">✕</button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }
+        
+        document.getElementById('family-tbody-p1').innerHTML = Array.from({length: 8}, (_, i) => generateRowHTML(i + 1)).join('');
+        document.getElementById('family-tbody-p2').innerHTML = Array.from({length: 2}, (_, i) => generateRowHTML(i + 9)).join('');
+
+        const surveyDateInput = document.getElementById('survey-date');
+        // --- NEW CODE: Auto-fill today's date ---
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const dd = String(today.getDate()).padStart(2, '0');
+        
+        surveyDateInput.value = `${yyyy}-${mm}-${dd}`;
+        // ----------------------------------------
+        const basicName = document.getElementById('basic-beneficiary-name');
+        const basicAge = document.getElementById('basic-beneficiary-age');
+        const basicDob = document.getElementById('basic-beneficiary-dob');
+        const basicId = document.getElementById('basic-beneficiary-id');
+
+        const tableName = document.getElementById('table-beneficiary-name');
+        const tableAge = document.getElementById('table-beneficiary-age');
+        const tableId = document.getElementById('table-beneficiary-id');
+
+        const religionSelector = document.getElementById('religion-selector');
+        const religionCustom = document.getElementById('religion-custom');
+        const villageSelector = document.getElementById('village-selector');
+        const villageCustom = document.getElementById('village-custom');
+        const houseTypeSelector = document.getElementById('house-type-selector');
+        const houseTypeCustom = document.getElementById('house-type-custom');
+
+        const sourceRent = document.getElementById('source-rent-val');
+        const targetRent = document.getElementById('target-rent-val');
+        const sourceElec = document.getElementById('source-elec-val');
+        const targetElec = document.getElementById('target-elec-val');
+
+        const elecYes = document.getElementById('elec-yes-radio');
+        const elecNo = document.getElementById('elec-no-radio');
+        const officerDropdown = document.getElementById('survey-officer-dropdown');
+        const officerCustom = document.getElementById('survey-officer-custom');
+
+        const familyCountInput = document.getElementById('total-family-members-count');
+        const warningMsgCount = document.getElementById('warning-msg-count');
+        const allMemberRows = document.querySelectorAll('.family-member-row');
+        const p2TableHeaderTitle = document.getElementById('p2-table-header-title');
+        const p2TableContainer = document.getElementById('family-table-p2');
+
+        const calcMonthlyEarnings = document.getElementById('calc-monthly-earnings');
+        const calcOtherEarnings = document.getElementById('calc-other-earnings');
+        const calcTotalEarnings = document.getElementById('calc-total-earnings');
+        const calcTotalExpenses = document.getElementById('calc-total-expenses');
+        const calcNetAmount = document.getElementById('calc-net-amount');
+        const calcPerHead = document.getElementById('calc-per-head');
+        const rowNetAmount = document.getElementById('row-net-amount');
+        const rowPerHead = document.getElementById('row-per-head');
+        
+        const pinCodeInput = document.getElementById('pin-code');
+        if (pinCodeInput) {
+            pinCodeInput.addEventListener('input', function(e) {
+                let val = e.target.value.replace(/\D/g, ''); 
+                if (val.length > 6) val = val.substring(0, 6); 
+                if (val.length > 3) val = val.substring(0, 3) + ' ' + val.substring(3);
+                e.target.value = val;
+            });
+        }
+
+        function calculateAndPopulateAge() {
+            const surveyDateVal = surveyDateInput.value;
+            const dobVal = basicDob.value;
+            if (surveyDateVal && dobVal) {
+                const surveyDate = new Date(surveyDateVal);
+                const dob = new Date(dobVal);
+                let age = surveyDate.getFullYear() - dob.getFullYear();
+                const monthDifference = surveyDate.getMonth() - dob.getMonth();
+                if (monthDifference < 0 || (monthDifference === 0 && surveyDate.getDate() < dob.getDate())) age--;
+                const finalizedAge = age >= 0 ? age : 0;
+                basicAge.value = finalizedAge;
+                if (tableAge) tableAge.value = finalizedAge;
+            } else {
+                basicAge.value = '';
+                if (tableAge) tableAge.value = '';
+            }
+        }
+
+        surveyDateInput.addEventListener('change', calculateAndPopulateAge);
+        basicDob.addEventListener('change', calculateAndPopulateAge);
+
+        function attachAadharFormatter(element) {
+            if (!element) return;
+            element.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, ''); 
+                if (value.length > 12) value = value.substr(0, 12);
+                let formatted = '';
+                for (let i = 0; i < value.length; i++) {
+                    if (i > 0 && i % 4 === 0) formatted += '-';
+                    formatted += value[i];
+                }
+                e.target.value = formatted;
+                if (e.target === basicId && tableId) tableId.value = formatted;
+                else if (e.target === tableId && basicId) basicId.value = formatted;
+            });
+        }
+
+        function attachMobileFormatter(element) {
+            element.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, ''); 
+                if (value.length > 10) value = value.substr(0, 10); 
+                e.target.value = value;
+            });
+        }
+
+        attachAadharFormatter(basicId);
+        if (tableId) attachAadharFormatter(tableId);
+        document.querySelectorAll('.mobile-input').forEach(attachMobileFormatter);
+
+        // Populate Teacher Dropdowns
+        document.querySelectorAll('.teacher-dropdown-select').forEach(selectNode => {
+            selectNode.innerHTML = '<option value="">Select Teacher</option>';
+            teacherList.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t;
+                opt.textContent = t;
+                selectNode.appendChild(opt);
+            });
+            
+            selectNode.addEventListener('change', function() {
+                const row = this.closest('tr');
+                const customBox = row.querySelector('.custom-specify-box');
+                const backBtn = row.querySelector('.table-teacher-back');
+                
+                if (this.value === 'Other' && !this.disabled) {
+                    this.style.display = 'none';
+                    customBox.style.display = 'block';
+                    if (backBtn) backBtn.style.display = 'inline-flex';
+                    customBox.focus();
+                }
+            });
+        });
+
+        document.body.addEventListener('click', function(e) {
+            if (e.target.classList.contains('table-teacher-back')) {
+                const row = e.target.closest('tr');
+                const selector = row.querySelector('.teacher-dropdown-select');
+                const customBox = row.querySelector('.custom-specify-box');
+                
+                selector.value = '';
+                selector.style.display = 'inline-block';
+                customBox.style.display = 'none';
+                customBox.value = '';
+                e.target.style.display = 'none';
+                selector.focus();
+            }
+        });
+
+        allMemberRows.forEach(row => {
+            const rowAadharInput = row.querySelector('.safe-id-format');
+            if (rowAadharInput && rowAadharInput !== tableId && rowAadharInput !== basicId) {
+                attachAadharFormatter(rowAadharInput);
+            }
+        });
+
+        function setupDropdownToggle(selector, customInput, backBtn) {
+            selector.addEventListener('change', function() {
+                if (this.value === 'Other') {
+                    selector.style.display = 'none';
+                    customInput.style.display = 'inline-block';
+                    if (backBtn) backBtn.style.display = 'inline-flex';
+                    customInput.focus();
+                }
+            });
+
+            if (backBtn) {
+                backBtn.addEventListener('click', function() {
+                    selector.value = '';
+                    selector.style.display = 'inline-block';
+                    customInput.style.display = 'none';
+                    backBtn.style.display = 'none';
+                    customInput.value = '';
+                    selector.focus();
+                });
+            }
+        }
+        
+        setupDropdownToggle(officerDropdown, officerCustom, document.getElementById('survey-officer-back'));
+        setupDropdownToggle(villageSelector, villageCustom, document.getElementById('village-back'));
+        setupDropdownToggle(religionSelector, religionCustom, document.getElementById('religion-back'));
+        setupDropdownToggle(houseTypeSelector, houseTypeCustom, document.getElementById('house-type-back'));
+
+        function recalculateMakatibSummary() {
+            let totalMaktab = 0;
+            let classes = { Atfaal: 0, Niswaan: 0, Balighan: 0 };
+            let courses = { 'Book-0': 0, 'Book-1': 0, 'Book-2': 0, 'Book-3': 0, 'Book-4': 0, 'Quran': 0, 'Weekly Ijtema': 0 };
+
+            document.querySelectorAll('.family-member-row.is-active').forEach(row => {
+                const radioY = row.querySelector('.maktab-toggle-radio[value="Y"]');
+                if (radioY && radioY.checked) {
+                    totalMaktab++;
+                    
+                    const classSelect = row.querySelector('.class-dropdown-select');
+                    if (classSelect && classSelect.value in classes) {
+                        classes[classSelect.value]++;
+                    }
+                    
+                    const courseSelect = row.querySelector('.course-dropdown-select');
+                    if (courseSelect && courseSelect.value in courses) {
+                        courses[courseSelect.value]++;
+                    }
+                }
+            });
+
+            document.getElementById('summary-total-maktab').textContent = totalMaktab;
+            document.getElementById('summary-class-atfaal').textContent = classes['Atfaal'];
+            document.getElementById('summary-class-niswaan').textContent = classes['Niswaan'];
+            document.getElementById('summary-class-balighan').textContent = classes['Balighan'];
+            
+            document.getElementById('summary-course-book0').textContent = courses['Book-0'];
+            document.getElementById('summary-course-book1').textContent = courses['Book-1'];
+            document.getElementById('summary-course-book2').textContent = courses['Book-2'];
+            document.getElementById('summary-course-book3').textContent = courses['Book-3'];
+            document.getElementById('summary-course-book4').textContent = courses['Book-4'];
+            document.getElementById('summary-course-quran').textContent = courses['Quran'];
+            document.getElementById('summary-course-ijtema').textContent = courses['Weekly Ijtema'];
+        }
+
+        document.body.addEventListener('change', function(e) {
+            if (e.target.classList.contains('maktab-toggle-radio')) {
+                const radio = e.target;
+                const row = radio.closest('tr');
+                const dependentFields = row.querySelectorAll('.maktab-dependent-field');
+                const backBtn = row.querySelector('.table-teacher-back');
+                
+                if (radio.value === 'N') {
+                    dependentFields.forEach(field => {
+                        field.value = '';
+                        field.disabled = true;
+                        if (field.classList.contains('custom-specify-box') || field.classList.contains('teacher-dropdown-select')) {
+                            field.style.display = field.classList.contains('teacher-dropdown-select') ? 'inline-block' : 'none';
+                        }
+                    });
+                    if (backBtn) backBtn.style.display = 'none';
+                } else if (radio.value === 'Y') {
+                    dependentFields.forEach(field => {
+                        if (!field.classList.contains('custom-specify-box')) {
+                            field.disabled = false;
+                        }
+                    });
+                    const teacherSelect = row.querySelector('.teacher-dropdown-select');
+                    const customBox = row.querySelector('.custom-specify-box');
+                    if (teacherSelect && teacherSelect.value === 'Other') {
+                        teacherSelect.style.display = 'none';
+                        customBox.style.display = 'block';
+                        customBox.disabled = false;
+                        if (backBtn) backBtn.style.display = 'inline-flex';
+                    }
+                }
+                recalculateMakatibSummary();
+            }
+            
+            if (e.target.classList.contains('class-dropdown-select') || e.target.classList.contains('course-dropdown-select')) {
+                recalculateMakatibSummary();
+            }
+        });
+
+        function syncFamilyRowsVisibility() {
+            let count = parseInt(familyCountInput.value, 10);
+            if (isNaN(count) || count < 1) count = 1; 
+            if (count > 10) { warningMsgCount.style.display = 'inline'; count = 10; } 
+            else { warningMsgCount.style.display = 'none'; }
+
+            let p2HasRows = false;
+            allMemberRows.forEach(row => {
+                let rIdx = parseInt(row.className.match(/row-idx-(\d+)/)[1], 10);
+                if (rIdx <= count) {
+                    row.classList.add('is-active');
+                    if (rIdx >= 9) p2HasRows = true;
+                } else {
+                    row.classList.remove('is-active');
+                    row.querySelectorAll('input[type="number"]').forEach(inf => inf.value = '');
+                    row.querySelectorAll('.maktab-dependent-field').forEach(field => field.value = '');
+                    const radioNo = row.querySelector('.maktab-toggle-radio[value="N"]');
+                    if (radioNo) radioNo.checked = true;
+                }
+            });
+
+            if (p2HasRows) { p2TableHeaderTitle.style.display = 'block'; p2TableContainer.style.display = 'table'; } 
+            else { p2TableHeaderTitle.style.display = 'none'; p2TableContainer.style.display = 'none'; }
+            recalculateFormTotals();
+            recalculateMakatibSummary();
+        }
+
+        familyCountInput.addEventListener('input', syncFamilyRowsVisibility);
+        familyCountInput.value = 1; 
+        syncFamilyRowsVisibility();
+
+        function recalculateFormTotals() {
+            let totalMonthlyIncome = 0, totalOtherIncome = 0, totalExpenses = 0;
+            document.querySelectorAll('.family-member-row.is-active .monthly-income-field').forEach(field => {
+                const val = parseFloat(field.value); if (!isNaN(val)) totalMonthlyIncome += val;
+            });
+            document.querySelectorAll('.family-member-row.is-active .other-income-field').forEach(field => {
+                const val = parseFloat(field.value); if (!isNaN(val)) totalOtherIncome += val;
+            });
+            document.querySelectorAll('.expense-field').forEach(field => {
+                const val = parseFloat(field.value); if (!isNaN(val)) totalExpenses += val;
+            });
+
+            let totalIncome = totalMonthlyIncome + totalOtherIncome;
+            let netBalance = totalIncome - totalExpenses;
+
+            calcMonthlyEarnings.value = totalMonthlyIncome > 0 ? totalMonthlyIncome : '';
+            calcOtherEarnings.value = totalOtherIncome > 0 ? totalOtherIncome : '';
+            calcTotalEarnings.value = totalIncome > 0 ? totalIncome : '';
+            calcTotalExpenses.value = totalExpenses > 0 ? totalExpenses : '';
+            calcNetAmount.value = totalIncome > 0 || totalExpenses > 0 ? netBalance : '';
+
+            let familyCount = parseInt(familyCountInput.value, 10);
+            if (!isNaN(familyCount) && familyCount > 0 && (totalIncome > 0 || totalExpenses > 0)) {
+                let perHeadVal = netBalance / familyCount;
+                calcPerHead.value = perHeadVal.toFixed(2);
+            } else {
+                calcPerHead.value = '';
+            }
+
+            if (netBalance < 0) {
+                rowNetAmount.classList.add('negative-value-highlight');
+                rowPerHead.classList.add('negative-value-highlight');
+            } else {
+                rowNetAmount.classList.remove('negative-value-highlight');
+                rowPerHead.classList.remove('negative-value-highlight');
+            }
+        }
+
+        sourceRent.addEventListener('input', function() { targetRent.value = this.value; recalculateFormTotals(); });
+        targetRent.addEventListener('input', function() { sourceRent.value = this.value; recalculateFormTotals(); });
+        sourceElec.addEventListener('input', function() { targetElec.value = this.value; if (parseFloat(this.value) > 0) elecYes.checked = true; recalculateFormTotals(); });
+        targetElec.addEventListener('input', function() { sourceElec.value = this.value; if (parseFloat(this.value) > 0) elecYes.checked = true; recalculateFormTotals(); });
+
+        elecNo.addEventListener('change', function() { if (this.checked) { sourceElec.value = ''; targetElec.value = ''; recalculateFormTotals(); } });
+        basicName.addEventListener('input', function() { tableName.value = this.value; });
+        tableName.addEventListener('input', function() { basicName.value = this.value; });
+
+        document.body.addEventListener('input', function(e) {
+            if (e.target.classList.contains('monthly-income-field') || e.target.classList.contains('other-income-field') || e.target.classList.contains('expense-field')) {
+                recalculateFormTotals();
+            }
+        });
+        // --- Dynamic Footer Aadhar Sync ---
+        const footerAadharDisplays = document.querySelectorAll('.footer-aadhar-display');
+        
+        function syncFooterAadhar(e) {
+            const aadharValue = e.target.value.trim() === "" ? "Not Provided" : e.target.value;
+            footerAadharDisplays.forEach(display => {
+                display.textContent = aadharValue;
+            });
+        }
+
+        // Attach the listener to both the basic info input and the row 1 table input
+        if (basicId) {
+            basicId.addEventListener('input', syncFooterAadhar);
+        }
+        if (tableId) {
+            tableId.addEventListener('input', syncFooterAadhar);
+        }
+        // --- Hide Empty Dropdown Placeholders During Print ---
+        window.addEventListener("beforeprint", () => {
+            document.querySelectorAll('select').forEach(select => {
+                if (select.value === "") {
+                    // Make the text transparent so it doesn't show on paper
+                    select.style.color = "transparent"; 
+                }
+            });
+        });
+
+        window.addEventListener("afterprint", () => {
+            document.querySelectorAll('select').forEach(select => {
+                // Restore the text color when you return to the screen
+                select.style.color = ""; 
+            });
+        });
+function resetForm() {
+            // Add a confirmation popup so users don't accidentally erase their work
+            if (!confirm("Are you sure you want to clear all entered data? This cannot be undone.")) {
+                return;
+            }
+
+            // 1. Clear all standard text, number, date inputs, and textareas
+            document.querySelectorAll('input[type="text"], input[type="number"], input[type="date"], textarea').forEach(el => {
+                el.value = '';
+            });
+
+            // 2. Uncheck all checkboxes and radio buttons
+            document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(el => {
+                el.checked = false;
+            });
+
+            // 3. Reset all dropdown menus to their default empty state
+            document.querySelectorAll('select').forEach(el => {
+                el.value = '';
+                el.style.display = 'inline-block'; // Ensure they are visible
+            });
+
+            // 4. Hide all custom "Other" text boxes and "X" back buttons
+            document.querySelectorAll('.custom-specify-box, input[id$="-custom"]').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('.back-to-select-btn').forEach(el => {
+                el.style.display = 'none';
+            });
+
+            // 5. Restore default Maktab radio button to "N" and disable related fields
+            document.querySelectorAll('.maktab-toggle-radio[value="N"]').forEach(el => {
+                el.checked = true; 
+            });
+            document.querySelectorAll('.maktab-dependent-field').forEach(el => {
+                el.disabled = true;
+            });
+
+            // 6. Reset family count to 1 and trigger the row visibility sync
+            const familyCountInput = document.getElementById('total-family-members-count');
+            if (familyCountInput) {
+                familyCountInput.value = 1;
+                syncFamilyRowsVisibility();
+            }
+
+            // 7. Clear the Aadhar text in the footer
+            document.querySelectorAll('.footer-aadhar-display').forEach(display => {
+                display.textContent = "Not Provided";
+            });
+
+            // 8. Recalculate totals to clear out the calculation table
+            recalculateFormTotals();
+            recalculateMakatibSummary();
+        document.getElementById('survey-date').value = `${yyyy}-${mm}-${dd}`;
+        }
+        function validateAndPrint() {
+            // 1. Validate Survey Date
+            if (!document.getElementById('survey-date').value) {
+                alert("Please select a Survey Date.");
+                return;
+            }
+
+            // 2. Validate Type of Inquiry (At least one must be checked)
+            const inquiries = document.querySelectorAll('.grid-container .checkbox-group input[type="checkbox"]');
+            let inquiryChecked = false;
+            inquiries.forEach(chk => { if (chk.checked) inquiryChecked = true; });
+            if (!inquiryChecked) {
+                alert("Please select at least one Type of Inquiry (Ration, Education, or Medical).");
+                return;
+            }
+
+            // 3. Validate Surveyor Name
+            const surveyor = document.getElementById('survey-officer-dropdown').value;
+            if (!surveyor) {
+                alert("Please select a Surveyor Name.");
+                return;
+            }
+            if (surveyor === 'Other' && !document.getElementById('survey-officer-custom').value.trim()) {
+                alert("Please specify the Custom Surveyor Name.");
+                return;
+            }
+
+            // 4. Validate Village
+            const village = document.getElementById('village-selector').value;
+            if (!village) {
+                alert("Please select a Village.");
+                return;
+            }
+            if (village === 'Other' && !document.getElementById('village-custom').value.trim()) {
+                alert("Please specify the Custom Village.");
+                return;
+            }
+
+            // 5. Validate Referred by
+            const referredBy = document.querySelector('.referred-by-group input').value.trim();
+            if (!referredBy) {
+                alert("Please fill in the 'Referred by' field.");
+                return;
+            }
+
+            // 6. Validate Beneficiary Name
+            if (!document.getElementById('basic-beneficiary-name').value.trim()) {
+                alert("Please enter the Beneficiary Name.");
+                return;
+            }
+
+            // 7. Validate Date of Birth (DOB) & Compare to Survey Date
+            const surveyDateValue = document.getElementById('survey-date').value;
+            const dobValue = document.getElementById('basic-beneficiary-dob').value;
+            
+            if (!dobValue) {
+                alert("Please select the Date of Birth (DOB).");
+                return;
+            }
+            
+            // If both dates exist, ensure DOB is strictly before the Survey Date
+            if (surveyDateValue && dobValue) {
+                const surveyDateObj = new Date(surveyDateValue);
+                const dobObj = new Date(dobValue);
+                
+                if (dobObj >= surveyDateObj) {
+                    alert("Invalid Date of Birth: DOB must be an earlier date than the Survey Date.");
+                    return;
+                }
+            }
+
+            // 8. Validate Basic Aadhar Number (Format: XXXX-XXXX-XXXX)
+            const basicAadharValue = document.getElementById('basic-beneficiary-id').value.trim();
+            if (!basicAadharValue) {
+                alert("Please enter the Aadhar number.");
+                return;
+            }
+            if (!/^\d{4}-\d{4}-\d{4}$/.test(basicAadharValue)) {
+                alert("Invalid format: Basic Aadhar number must be in the format XXXX-XXXX-XXXX.");
+                return;
+            }
+
+            // 9. Validate Mobile Number (Exactly 10 Digits)
+            const mobileNum = document.querySelector('.mobile-input').value.trim();
+            if (!mobileNum) {
+                alert("Please enter the Mobile Number.");
+                return;
+            }
+            if (!/^\d{10}$/.test(mobileNum)) {
+                alert("Invalid format: Mobile number must be exactly 10 digits long.");
+                return;
+            }
+
+            // 10. Validate Religion
+            const religion = document.getElementById('religion-selector').value;
+            if (!religion) {
+                alert("Please select a Religion.");
+                return;
+            }
+            if (religion === 'Other' && !document.getElementById('religion-custom').value.trim()) {
+                alert("Please specify the Custom Religion.");
+                return;
+            }
+
+            // 11. Validate Total Family Members
+            if (!document.getElementById('total-family-members-count').value.trim()) {
+                alert("Please enter the Total Family members count.");
+                return;
+            }
+
+            // 12. Validate Active Family Members Aadhar Numbers (Format: XXXX-XXXX-XXXX)
+            const activeFamilyRows = document.querySelectorAll('.family-member-row.is-active');
+            for (let i = 0; i < activeFamilyRows.length; i++) {
+                const familyAadharInput = activeFamilyRows[i].querySelector('.family-aadhar-input');
+                if (familyAadharInput) {
+                    const familyAadharValue = familyAadharInput.value.trim();
+                    // Validate format only if they started typing something
+                    if (familyAadharValue.length > 0) {
+                        if (!/^\d{4}-\d{4}-\d{4}$/.test(familyAadharValue)) {
+                            alert(`Invalid format in Family Member Row ${i + 1}: Aadhar number must be in the format XXXX-XXXX-XXXX.`);
+                            return;
+            // 13. Force all rows with content to be active before printing
+    const rows = document.querySelectorAll('.family-member-row');
+    rows.forEach(row => {
+        // Check if any input/select in this row has a value
+        const inputs = row.querySelectorAll('input, select');
+        let hasValue = false;
+        inputs.forEach(input => {
+            if (input.value.trim() !== "") hasValue = true;
+        });
+
+        // Add the class required for printing visibility
+        if (hasValue) {
+            row.classList.add('is-active');
+        }
+    }); 
+                        }
+                    }
+                }
+            }
+
+            // If all required fields pass validation, trigger the print window
+            // --- NEW CODE: Dynamic PDF File Naming ---
+            
+            // 1. Save original title
+            const originalTitle = document.title; 
+            
+            // 2. Get the Village name
+            // If they selected "Other", use the custom text box value
+            let villageName = document.getElementById('village-selector').value;
+            if (villageName === 'Other') {
+                villageName = document.getElementById('village-custom').value.trim() || 'OtherVillage';
+            }
+            
+            // 3. Get the last 4 digits of the ID
+            const aadharValue = document.getElementById('basic-beneficiary-id').value.trim();
+            const last4Digits = aadharValue.slice(-4);
+            
+            // 4. Set the new title (This becomes the default filename when printing)
+            document.title = villageName + "-" + last4Digits;
+
+            // 5. Trigger the print dialogue (the browser reads the new title here)
+            window.print();
+
+            // 6. Instantly restore the original title for the live web page
+            document.title = originalTitle;
+        }
+    (function() {
+        // Set your password here
+        const ACCESS_PASSWORD = "SAQ-Asim0066";
+
+        function doUnlock() {
+            const passInput = document.getElementById('appPasswordInput');
+            const errorMsg = document.getElementById('passwordError');
+            const overlay = document.getElementById('passwordOverlay');
+
+            if (passInput && passInput.value.trim() === ACCESS_PASSWORD) {
+                overlay.style.display = 'none';
+                sessionStorage.setItem('appUnlocked', 'true');
+            } else if (errorMsg) {
+                errorMsg.style.display = 'block';
+                if (passInput) passInput.value = '';
+            }
+        }
+
+        // Attach listeners once DOM is ready
+        window.addEventListener('DOMContentLoaded', () => {
+            // Auto-unlock if already unlocked during current session
+            if (sessionStorage.getItem('appUnlocked') === 'true') {
+                const overlay = document.getElementById('passwordOverlay');
+                if (overlay) overlay.style.display = 'none';
+            }
+
+            const btn = document.getElementById('unlockBtn');
+            const input = document.getElementById('appPasswordInput');
+
+            if (btn) btn.addEventListener('click', doUnlock);
+            if (input) {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') doUnlock();
+                });
+            }
+        });
+    })();
+    </script>
+</body>
+</html>
